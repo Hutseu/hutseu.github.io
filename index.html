@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遠見齋</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #f8f4e5; /* 米黄色背景 */
+            font-family: "Noto Serif SC", "SimSun", serif;
+            color: #333; /* 黑色文字 */
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+        
+        /* 左侧边栏 */
+        .sidebar {
+            flex: 0 0 280px;
+        }
+        
+        .blogger-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .blog-title {
+            font-size: 2.2em;
+            font-weight: normal;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #333;
+            letter-spacing: 2px;
+        }
+        
+        .calligraphy {
+            font-size: 4.5em;
+            text-align: center;
+            margin: 10px 0;
+            color: #333;
+            font-family: "SimSun", serif;
+        }
+        
+        .subtitle {
+            font-size: 1.4em;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+        }
+        
+        .nav-links a {
+            color: #0066cc; /* 蓝色链接 */
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .location {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        
+        .quote-block {
+            background-color: #f0f0f0; /* 浅灰色引用块 */
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #555;
+            text-align: center;
+        }
+        
+        .friends-links {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .friends-links h3 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: normal;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        
+        .friend-link {
+            display: block;
+            padding: 8px 0;
+            color: #0066cc;
+            text-decoration: none;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .friend-link:last-child {
+            border-bottom: none;
+        }
+        
+        /* 右侧主内容区 */
+        .main-content {
+            flex: 1;
+        }
+        
+        .post-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .post-title {
+            font-size: 1.4em;
+            color: #333; /* 灰黑色标题 */
+            font-weight: bold; /* 粗体 */
+        }
+        
+        .post-date {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .post-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.85em;
+            color: #666;
+        }
+        
+        .post-excerpt {
+            color: #444;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        
+        /* 阅读全文按钮样式 */
+        .read-more {
+            display: inline-block;
+            background-color: #e0e0e0; /* 浅灰色背景 */
+            color: #666; /* 灰色文字 */
+            text-decoration: none;
+            font-size: 0.9em;
+            padding: 8px 16px;
+            border-radius: 20px; /* 圆角矩形 */
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .read-more:hover {
+            background-color: #d0d0d0; /* 悬停时稍微加深 */
+            color: #555;
+        }
+        
+        .recent-posts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .recent-post {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .recent-post h3 {
+            font-size: 1.1em;
+            color: #333; /* 灰黑色标题 */
+            font-weight: bold; /* 粗体 */
+            margin-bottom: 10px;
+        }
+        
+        .recent-post .post-date {
+            font-size: 0.8em;
+            color: #888;
+        }
+        
+        .recent-post .category {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .section-title {
+            font-size: 1.2em;
+            margin: 30px 0 15px;
+            color: #333;
+            font-weight: normal;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                flex: 1;
+            }
+            
+            .recent-posts {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧边栏 -->
+        <aside class="sidebar">
+            <div class="blogger-card">
+                <h1 class="blog-title">齊見遠</h1>
+                <div class="calligraphy">觀</div>
+                <div class="subtitle">遠見齋</div>
+                
+                <div class="nav-links">
+                    <a href="#">主葉</a>
+                    <a href="#">集冊</a>
+                    <a href="#">型別</a>
+                    <a href="#">搭鉤</a>
+                    <a href="#">述身</a>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">49</div>
+                        <div class="stat-label">文章</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">型別</div>
+                    </div>
+                </div>
+                
+                <div class="location">益陽·柳谿</div>
+                
+                <div class="quote-block">
+                    登高臨深，遠見之樂，臺榭不如丘山所見高也。<br>
+                    <span style="font-size:0.9em; color:#777;">詩外傳·卷五</span>
+                </div>
+                
+                <div style="font-size:0.9em; color:#666; text-align:center; margin-top:20px;">
+                    本站歡迎文章投稿，詳詢可至：<br>
+                    網站信箱：contact@vistudium.top
+                </div>
+            </div>
+            
+            <div class="friends-links">
+                <h3>芳鄰</h3>
+                <a href="#" class="friend-link">亂齋褀志</a>
+                <a href="#" class="friend-link">syzygyyuan.github.io</a>
+                <a href="#" class="friend-link">廼氏珍帶</a>
+                <a href="#" class="friend-link">chenjouney.github.io</a>
+                <a href="#" class="friend-link">焰华Honoka55</a>
+                <a href="#" class="friend-link">honoka55.github.io</a>
+                <a href="#" class="friend-link">Martin的雜誌</a>
+                <a href="#" class="friend-link">www.martingrocery.top</a>
+                <a href="#" class="friend-link">燕文院</a>
+                <a href="#" class="friend-link">yanwenyuan.uk</a>
+                <a href="#" class="friend-link">sunboyallen</a>
+                <a href="#" class="friend-link">sunboyallen.github.io</a>
+                <a href="#" class="friend-link">聊哉字議論壇</a>
+                <a href="#" class="friend-link">forum.han-zi.top</a>
+                <a href="#" class="friend-link">字統网</a>
+                <a href="#" class="friend-link">zi.tools</a>
+                <a href="#" class="friend-link">漢字.net</a>
+            </div>
+            
+            <h3 class="section-title">近文</h3>
+            
+            <div class="recent-post">
+                <h3>海昏侯墓鏡屏《衣鏡賦》小札</h3>
+                <div class="post-date">2025-07-17</div>
+                <div class="category">漢學/小學</div>
+            </div>
+            
+            <div class="recent-post">
+                <h3>花鼓戲《討學錢》劇本</h3>
+                <div class="post-date">2025-06-15</div>
+                <div class="category">漢學/方言</div>
+            </div>
+            
+            <div class="recent-post">
+                <h3>阮光宏辭世，遠見齋縞素致哀</h3>
+                <div class="post-date">2025-10-07</div>
+            </div>
+        </aside>
+        
+        <!-- 右侧主内容区 -->
+        <main class="main-content">
+            <div class="post-card">
+                <div class="post-header">
+                    <h2 class="post-title">ENCLØSUR3 系列影片 文案更新</h2>
+                    <span class="post-date">2024-01-01</span>
+                </div>
+                
+                <div class="post-meta">
+                    <span>第4集（共5集）：万「字」皆可「连」（影片文案）</span>
+                </div>
+                
+                <p class="post-excerpt">
+                    查看往期文案：<a href="#" style="color:#0066cc;">集冊：ENCLØSUR3</a>
+                </p>
+            </div>
+            
+            <div class="post-card">
+                <div class="post-header">
+                    <h2 class="post-title">海昏侯墓鏡屏《衣鏡賦》小札</h2>
+                    <span class="post-date">2025-07-17</span>
+                </div>
+                
+                <div class="post-meta">
+                    <span>HULENKIUS · 3月前</span>
+                    <span>漢學/小學</span>
+                    <span>3264言</span>
+                </div>
+                
+                <p class="post-excerpt">
+                    西漢海昏侯劉賀墓出土的孔子鏡屏上有一篇韻文，整理者稱作《衣鏡賦》，我頑摩不已，十分喜愛。不過到網絡媒體上搜索，則難以找到一個便於公眾閱讀、理解的版本。我在這裏將我的學習小記放出來，供有趣的讀者參考。
+                </p>
+                
+                <a href="#" class="read-more">阅读全文</a>
+            </div>
+            
+            <div class="post-card">
+                <div class="post-header">
+                    <h2 class="post-title">花鼓戲《討學錢》劇本</h2>
+                    <span class="post-date">2025-06-15</span>
+                </div>
+                
+                <div class="post-meta">
+                    <span>HULENKIUS · 5月前</span>
+                    <span>漢學/方言</span>
+                    <span>8491言</span>
+                </div>
+                
+                <p class="post-excerpt">
+                    花鼓戲《討學錢》是一代湖南人記憶中的經典曲目，講述了迂腐先生張九如前往性格潑辣直爽的陳大嫂家討學錢的故事，諷刺了舊時代教育的落後和愚昧，並讚揚了勞動人民的智慧和勇氣。劇中的張先生「引經據典」地同陳大嫂對罵，頗為談諧。全劇用方言呈現，現有的演出版本中，僅有張天相的兩種版本中使用了老派長沙話。從此劇中，還可以瞭解到當時的一些風俗習慣。
+                </p>
+                
+                <a href="#" class="read-more">阅读全文</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
