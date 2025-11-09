@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字里糊粥</title>
+    <link rel="preload" as="style" crossorigin
+        href="https://fontsapi.zeoseven.com/821/main/result.css"
+        onload="this.rel='stylesheet'"
+        onerror="this.href='https://fontsapi-storage.zeoseven.com/821/main/result.css'" />
+    <noscript>
+        <link rel="stylesheet" href="https://fontsapi.zeoseven.com/821/main/result.css" />
+    </noscript>
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 全局背景和布局 */
+        body {
+            background-color: #fbf2e3;
+            color: #2b333e;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            font-family: "Soen Grotesk", sans-serif;
+            font-weight: normal;
+        }
+
+        /* 栏目样式 - 去除白色背景和阴影 */
+        .floating-card {
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            transition: all 0.3s ease;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .floating-card:hover {
+            box-shadow: none;
+            transform: translateY(-5px);
+        }
+
+        /* 头部导航样式 */
+        header {
+            margin-bottom: 30px;
+        }
+
+        .blog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .blog-title img {
+            height: 180px;
+            max-width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #2b333e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 0;
+        }
+
+        .nav-links a:hover {
+            background: rgba(43, 51, 62, 0.05);
+            color: #2b333e;
+        }
+
+        /* 主内容区 - 双栏布局 */
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+            flex: 1;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .author-info, .sidebar-widget {
+            padding: 25px;
+        }
+
+        .author-name {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #2b333e;
+        }
+
+        .author-bio {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #2b333e;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: #2b333e;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 0;
+            background: rgba(43, 51, 62, 0.05);
+        }
+
+        .social-links a:hover {
+            background: rgba(43, 51, 62, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .sidebar-widget h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(43, 51, 62, 0.1);
+            color: #2b333e;
+        }
+
+        .category-list li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        .category-list a {
+            color: #2b333e;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 0;
+        }
+
+        .category-list a:hover {
+            background: rgba(43, 51, 62, 0.05);
+            padding-left: 15px;
+        }
+
+        /* 主内容区样式 */
+        .main-content {
+            width: 70%;
+        }
+
+        .blog-post {
+            margin-bottom: 30px;
+            padding: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #2b333e;
+            opacity: 0.8;
+            flex-wrap: wrap;
+        }
+
+        .post-meta span {
+            background: rgba(43, 51, 62, 0.05);
+            padding: 4px 12px;
+            border-radius: 0;
+        }
+
+        .post-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            color: #2b333e;
+        }
+
+        .post-content {
+            margin-bottom: 20px;
+            color: #2b333e;
+            opacity: 0.9;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 15px;
+            color: #2b333e;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 20px;
+            background: rgba(43, 51, 62, 0.05);
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            background: rgba(43, 51, 62, 0.1);
+            padding: 8px 25px;
+        }
+
+        /* 页脚样式 */
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            color: #2b333e;
+            opacity: 0.8;
+        }
+
+        .footer-content {
+            padding: 20px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar, .main-content {
+                width: 100%;
+            }
+            
+            .blog-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .post-title {
+                font-size: 1.5rem;
+            }
+            
+            .blog-title img {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航头部 -->
+    <header class="floating-card">
+        <div class="blog-header">
+            <div class="blog-title">
+                
+            </div>
+            <div class="nav-links">
+                <a href="#">首页</a>
+                <a href="#">文章</a>
+                <a href="#">分类</a>
+                <a href="#">关于</a>
+                <a href="#">联系</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 - 双栏布局 -->
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="author-info floating-card">
+                <h2 class="author-name">字里糊粥</h2>
+                <p class="author-bio">前端开发者 & 摄影爱好者，用代码创造美，用镜头记录生活。</p>
+                <div class="social-links">
+                    <a href="https://xhslink.com/m/A3ecJ2SNyTl" title="小红书">
+                        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19.5 6.5c0 2.485-2.015 4.5-4.5 4.5s-4.5-2.015-4.5-4.5S12.515 2 15 2s4.5 2.015 4.5 4.5zM2 19.5C2 16.015 4.015 14 6.5 14s4.5 2.015 4.5 4.5S8.985 23 6.5 23 2 20.985 2 19.5zm15-5c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.bilibili.com/" title="哔哩哔哩">
+                        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.5 5.5c0 1.93-1.57 3.5-3.5 3.5s-3.5-1.57-3.5-3.5S13.07 2 15 2s3.5 1.57 3.5 3.5zM2 18.5C2 16.57 3.57 15 5.5 15S9 16.57 9 18.5 7.43 22 5.5 22 2 20.43 2 18.5zm15-6c0 1.38-1.12 2.5-2.5 2.5s-2.5-1.12-2.5-2.5 1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="sidebar-widget floating-card">
+                <h3>文章分类</h3>
+                <ul class="category-list">
+                    <li><a href="#">前端开发 <span>(12)</span></a></li>
+                    <li><a href="#">CSS技巧 <span>(8)</span></a></li>
+                    <li><a href="#">JavaScript <span>(15)</span></a></li>
+                    <li><a href="#">摄影艺术 <span>(9)</span></a></li>
+                    <li><a href="#">生活随笔 <span>(7)</span></a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-widget floating-card">
+                <h3>最新文章</h3>
+                <ul class="category-list">
+                    <li><a href="#">CSS磨砂玻璃效果实现原理</a></li>
+                    <li><a href="#">Vue 3.0 新特性解析</a></li>
+                    <li><a href="#">街头摄影的构图技巧</a></li>
+                    <li><a href="#">如何用CSS实现3D效果</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-widget floating-card">
+                <h3>标签云</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px;">
+                    <span style="background: rgba(43, 51, 62, 0.05); padding: 5px 12px; border-radius: 0; font-size: 0.85rem;">CSS3</span>
+                    <span style="background: rgba(43, 51, 62, 0.05); padding: 5px 12px; border-radius: 0; font-size: 0.85rem;">JavaScript</span>
+                    <span style="background: rgba(43, 51, 62, 0.05); padding: 5px 12px; border-radius: 0; font-size: 0.85rem;">Vue</span>
+                    <span style="background: rgba(43, 51, 62, 0.05); padding: 5px 12px; border-radius: 0; font-size: 0.85rem;">摄影</span>
+                    <span style="background: rgba(43, 51, 62, 0.05); padding: 5px 12px; border-radius: 0; font-size: 0.85rem;">设计</span>
+                    <span style="background: rgba(43, 51, 62, 0.05); padding: 5px 12px; border-radius: 0; font-size: 0.85rem;">响应式</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 主内容 -->
+        <main class="main-content">
+            <article class="blog-post floating-card">
+                <div class="post-meta">
+                    <span>2023年11月10日</span>
+                    <span>前端开发</span>
+                    <span>8分钟阅读</span>
+                </div>
+                <h2 class="post-title">CSS磨砂玻璃效果实现原理与技巧</h2>
+                <div class="post-content">
+                    <p>磨砂玻璃效果（Frosted Glass）是近年来非常流行的设计趋势，它通过半透明和模糊效果创造出层次感和深度。这种设计语言最早由苹果公司广泛采用，如今已成为现代Web设计的重要组成部分。</p>
+                    <p>实现磨砂玻璃效果主要依赖CSS的backdrop-filter属性，该属性可以对元素背后的区域应用图形效果，如模糊或颜色偏移。结合半透明背景和适当的边框阴影，可以创造出非常逼真的磨砂玻璃效果。</p>
+                </div>
+                <a href="#" class="read-more">阅读全文</a>
+            </article>
+            
+            <article class="blog-post floating-card">
+                <div class="post-meta">
+                    <span>2023年11月5日</span>
+                    <span>摄影艺术</span>
+                    <span>6分钟阅读</span>
+                </div>
+                <h2 class="post-title">街头摄影的构图技巧与光影运用</h2>
+                <div class="post-content">
+                    <p>街头摄影是捕捉城市生活瞬间的艺术形式，它要求摄影师具备敏锐的观察力和快速的反应能力。优秀的街头摄影作品不仅仅是记录，更是通过构图和光影讲述故事。</p>
+                    <p>在街头摄影中，三分法则、引导线、框架构图等都是常用的技巧。同时，合理利用自然光和阴影可以创造出戏剧性的效果，增强照片的表现力。</p>
+                </div>
+                <a href="#" class="read-more">阅读全文</a>
+            </article>
+            
+            <article class="blog-post floating-card">
+                <div class="post-meta">
+                    <span>2023年10月28日</span>
+                    <span>JavaScript</span>
+                    <span>10分钟阅读</span>
+                </div>
+                <h2 class="post-title">ES2023新特性解析：实用功能一览</h2>
+                <div class="post-content">
+                    <p>JavaScript语言持续演进，ES2023又带来了一些令人兴奋的新特性。这些新功能旨在提高代码的可读性和开发效率。</p>
+                    <p>本文将深入探讨ES2023中最实用的新特性，包括数组查找方法、WeakMap支持Symbol键等改进，以及如何在实际项目中应用这些新功能。这些更新虽然看起来微小，但在日常开发中能带来显著的便利。</p>
+                </div>
+                <a href="#" class="read-more">阅读全文</a>
+            </article>
+        </main>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="floating-card">
+        <div class="footer-content">
+            <p>© 2023 字里糊粥 - 记录技术与生活的点滴</p>
+        </div>
+    </footer>
+</body>
+</html>
