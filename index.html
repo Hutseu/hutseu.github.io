@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字里糊粥</title>
+    <style>
+        @import url("https://fontsapi.zeoseven.com/821/main/result.css");
+        @import url("https://fontsapi.zeoseven.com/18/main/result.css");
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --beige-primary: #f5f3ef;
+            --beige-light: #faf8f5;
+            --beige-dark: #e8e2d6;
+            --accent-color: #a78a7f;
+            --text-primary: #5a4e47;
+            --text-secondary: #8a7e76;
+            --card-shadow: 0 8px 25px rgba(90, 78, 71, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: "Soen Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-weight: normal;
+            background-color: var(--beige-light);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* 网格布局容器 */
+        .blog-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas: 
+                "sidebar header"
+                "sidebar main"
+                "sidebar footer";
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 0;
+        }
+
+        /* 头部样式 */
+        .blog-header {
+            grid-area: header;
+            padding: 2.5rem 3rem;
+            background: var(--beige-primary);
+            border-bottom: 1px solid var(--beige-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .header-logo {
+            width: 180pt;
+            height: auto;
+            filter: brightness(0) saturate(100%) invert(24%) sepia(15%) saturate(1012%) hue-rotate(343deg) brightness(93%) contrast(86%);
+        }
+
+        .search-container {
+            display: flex;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid var(--beige-dark);
+            border-radius: 25px 0 0 25px;
+            font-size: 1rem;
+            font-family: "Soen Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: white;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(167, 138, 127, 0.2);
+        }
+
+        .search-button {
+            padding: 0.8rem 1.5rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 1rem;
+            font-family: "Soen Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .search-button:hover {
+            background: #8f7368;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            grid-area: sidebar;
+            background: var(--beige-primary);
+            color: var(--text-primary);
+            padding: 2.5rem 2rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            border-right: 1px solid var(--beige-dark);
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .profile p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 2.5rem 0;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: var(--beige-dark);
+            color: var(--text-primary);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2.5rem;
+        }
+
+        .social-links a {
+            color: var(--text-primary);
+            background: var(--beige-dark);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .social-links svg {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) saturate(100%) invert(24%) sepia(15%) saturate(1012%) hue-rotate(343deg) brightness(93%) contrast(86%);
+        }
+
+        /* 主内容区样式 */
+        .main-content {
+            grid-area: main;
+            padding: 2.5rem 3rem;
+            display: grid;
+            gap: 2.5rem;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid var(--beige-dark);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(90, 78, 71, 0.12);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 2.2rem;
+        }
+
+        .card-meta {
+            display: flex;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            gap: 1.5rem;
+        }
+
+        .card-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title {
+            font-family: "Unbounded Sans", sans-serif;
+            font-weight: 300;
+            font-size: 2.25rem;
+            margin-bottom: 1.2rem;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .card-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1.8rem;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--accent-color);
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 页脚样式 */
+        .blog-footer {
+            grid-area: footer;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--beige-dark);
+            background: var(--beige-primary);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "sidebar"
+                    "footer";
+            }
+            
+            .sidebar {
+                position: relative;
+                height: auto;
+            }
+            
+            .blog-header, .main-content {
+                padding: 2rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header-logo {
+                width: 150pt;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-meta {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .card-content {
+                padding: 1.8rem;
+            }
+            
+            .blog-header, .main-content {
+                padding: 1.5rem;
+            }
+            
+            .card-title {
+                font-size: 1.8rem;
+            }
+            
+            .search-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="profile">
+                <p>前端开发者 & UI设计师</p>
+                <p>热爱技术，追求极致用户体验</p>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="#">文章分类</a></li>
+                <li><a href="#">项目作品</a></li>
+                <li><a href="#">关于我</a></li>
+                <li><a href="#">留言板</a></li>
+            </ul>
+            
+            <div class="social-links">
+                <a href="https://github.com" title="GitHub">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                </a>
+                <a href="https://b23.tv/NnvdoGv" title="哔哩哔哩">
+                    <svg width="20" height="20" viewBox="0 0 1049 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M363.82151 162.086l-96.96-93.983S251.71351 49.46 277.34551 28.36c25.761-20.972 27.056-11.651 35.73-5.826 8.672 5.826 144.21 139.551 144.21 139.551H363.82151z m322.081 3.496l96.961-93.984s15.146-18.641-10.486-39.742c-25.632-20.972-27.056-11.651-35.729-5.826-8.673 5.826-144.212 139.552-144.212 139.552h93.466z" fill="#2c2c2c"/>
+                        <path d="M1049.79751 339.568c-3.495-147.19-131.396-175.152-131.396-175.152s-655.295-5.307-791.998 0C-10.30049 202.994 0.18551 339.568 0.18551 339.568s1.813 292.565-0.13 440.66C14.81451 928.324 128.99351 951.884 128.99351 951.884s45.567 0.906 78.837 0.906c3.495 9.58 6.084 56.054 57.866 56.054 51.652 0 57.866-56.054 57.866-56.054s378.523-1.812 409.98-1.812c1.812 15.793 9.58 58.643 61.361 57.866 51.652-0.906 55.148-61.361 55.148-61.361s17.476-1.813 70.034 0c122.593-22.784 129.713-166.478 129.713-166.478s-1.683-294.248 0-441.437zM944.29151 808.06c0 23.172-18.382 42.072-41.037 42.072H157.21351c-22.655 0-41.037-18.77-41.037-42.072V313.936c0-23.173 18.382-42.073 41.037-42.073h746.042c22.655 0 41.037 18.771 41.037 42.073V808.06z" fill="#2c2c2c"/>
+                        <path d="M194.75451 453.487L413.79151 411.414l16.57 82.333-217.223 42.073z m681.575 0l-219.036-42.073-16.7 82.333 217.353 42.073zM430.36051 657.636s48.157 86.734 101.622-28.092c51.652 112.107 108.611 29.774 108.611 29.774l32.364 21.101s-60.455 97.22-140.199 23.69c-67.445 73.53-138.386-23.43-138.386-23.43l35.988-23.043z" fill="#2c2c2c"/>
+                    </svg>
+                </a>
+                <a href="https://xhslink.com/m/6xDdipLlkmv" title="小红书">
+                    <svg width="20" height="20" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M922.0096 509.44c8.6016 0.9216 16.384 1.024 24.064 2.4576 31.232 6.144 49.664 25.9072 50.9952 57.6512 1.3312 31.3344 1.2288 62.5664 0 93.9008a53.4528 53.4528 0 0 1-43.3152 50.9952 85.4016 85.4016 0 0 1-46.08-1.2288c-22.9376-7.168-35.328-23.552-39.2192-47.104-0.8192-4.5056 1.024-5.7344 5.2224-5.632 16.5888 0.2048 33.28 0 49.7664 0H931.84c0.3072-2.048 0.7168-3.7888 0.7168-5.3248v-57.6512c-0.2048-13.2096-7.3728-21.2992-20.48-21.504-27.7504-0.3072-55.6032 0-83.3536 0-0.7168 0-1.2288 0.2048-2.6624 0.512-0.1024 2.6624-0.4096 5.4272-0.4096 8.192 0 41.3696 0 82.6368 0.2048 124.0064 0 6.8608-2.048 8.6016-8.6016 8.2944-16.1792-0.4096-32.256-0.1024-48.4352-0.1024-8.3968 0-8.3968 0-8.3968-8.704V576.512c-2.9696-0.1024-5.12-0.4096-7.5776-0.4096-16.7936 0-33.5872 0-50.3808 0.2048-5.0176 0-6.8608-1.3312-6.7584-6.7584 0.4096-17.408 0.3072-34.9184 0-52.4288-0.1024-5.12 1.3312-6.8608 6.5536-6.656 19.1488 0.2048 37.9904 0.1024 57.6512 0.1024v-53.248c-11.776 0-23.3472-0.4096-34.816 0.2048-6.4512 0.2048-8.0896-2.048-7.9872-8.192 0.4096-18.7392 0.2048-37.5808 0.2048-57.344h43.008c0-6.144 0.2048-11.264 0-16.384 0-3.7888 1.024-5.5296 5.12-5.5296 18.432 0.2048 36.864 0.2048 55.0912 0 4.096 0 5.4272 1.7408 5.3248 5.5296-0.2048 3.584 0.2048 6.9632-0.2048 10.5472-0.3072 4.7104 1.7408 5.632 6.144 5.9392 12.3904 0.6144 25.1904 0.3072 37.1712 3.3792 33.4848 8.192 52.4288 33.0752 53.248 67.584 0.2048 13.312 0 26.624 0 39.936v6.5536z m-96.4608 0.4096h32.4608c0-15.0528 0.2048-29.3888 0-43.8272-0.2048-4.9152-3.3792-8.3968-8.3968-8.6016-7.9872-0.4096-15.9744-0.2048-24.1664-0.2048l0.1024 52.6336zM469.7088 716.1856l14.336-28.8768c5.12-10.1376 10.4448-20.2752 15.36-30.5152 1.8432-4.096 4.1984-5.632 9.0112-5.632 16.7936 0.3072 33.5872 0.1024 50.5856 0.1024h7.9872v-7.5776c0-59.8016-0.1024-119.5008 0.1024-179.2 0-6.3488-1.9456-7.7824-7.8848-7.5776-9.9328 0.4096-20.0704 0.2048-30.208 0.2048-2.8672 0-5.12-0.4096-5.12-4.1984v-61.0304c3.072-0.1024 5.632-0.512 8.192-0.512 44.9536 0 89.8048 0.1024 134.656-0.1024 6.656 0 8.4992 2.048 8.3968 8.4992-0.4096 16.7936-0.3072 33.6896 0 50.5856 0.1024 5.12-1.4336 6.9632-6.656 6.7584-11.8784-0.4096-23.552-0.2048-35.84-0.2048v193.8432c2.048 0.1024 4.3008 0.4096 6.656 0.4096h51.2c4.5056 0 6.144 1.2288 6.144 5.9392-0.2048 18.1248 0 36.2496 0 54.4768 0 3.7888-1.024 5.4272-5.12 5.4272L473.7024 716.8c-1.2288 0-2.048-0.3072-3.9936-0.7168z m-364.4416-54.5792h42.1888v-8.192c0-91.9552 0.1024-183.9104-0.1024-275.7632 0-6.144 1.3312-8.192 7.8848-8.192 17.1008 0.6144 34.0992 0.3072 51.2 0.2048 4.7104-0.2048 6.4512 1.1264 6.4512 6.144l-0.2048 284.8768c0 5.632-1.024 11.4688-2.56 16.7936-7.5776 28.16-29.9008 42.5984-59.8016 38.912a51.6096 51.6096 0 0 1-45.6704-51.6096l0.6144-3.1744z" fill="#FF2E4D"/>
+                        <path d="M416.5632 521.6256c-10.1376 0-19.0464 0.3072-27.9552 0a65.8432 65.8432 0 0 1-16.896-2.4576c-12.3904-3.7888-18.1248-14.2336-13.9264-26.8288 3.8912-11.264 8.6016-22.528 13.824-33.1776 13.7216-28.16 27.648-56.0128 41.7792-83.968 1.024-2.2528 3.6864-5.12 5.632-5.12 20.1728-0.4096 40.2432-0.3072 61.44-0.3072l-2.9696 6.9632-38.6048 77.5168c-3.584 7.168-2.6624 9.5232 4.096 11.8784 0.4096-0.3072 0.9216-0.4096 1.024-0.7168 2.56-8.6016 8.704-9.5232 16.6912-9.216 17.2032 0.4096 34.4064 0 53.1456 0l-3.584 7.68c-16.0768 32.0512-32.0512 64.1024-47.9232 96.256-5.8368 11.4688-3.4816 15.1552 9.728 15.36h25.7024l-3.3792 7.3728c-7.3728 14.5408-14.6432 28.9792-22.1184 43.3152a7.7824 7.7824 0 0 1-5.7344 3.6864c-20.48 0.2048-40.7552 0.512-61.0304 0-22.016-0.6144-31.1296-14.1312-23.7568-34.816a150.528 150.528 0 0 1 5.2224-12.6976l21.1968-43.6224 8.3968-17.1008z m-311.5008-65.2288l-3.8912 48.7424c-2.3552 28.7744-4.096 57.5488-7.5776 86.2208-3.7888 31.744-13.5168 61.8496-32.3584 88.2688a88.8832 88.8832 0 0 1-5.632 7.168c-1.1264-1.7408-2.3552-3.072-3.072-4.5056-10.5472-20.7872-21.4016-41.5744-31.8464-62.464-1.024-1.9456-2.048-4.8128-1.2288-6.5536 6.144-12.6976 6.9632-26.5216 7.9872-40.1408 2.9696-36.1472 5.9392-72.2944 8.4992-108.544 0.3072-6.3488 2.1504-8.6016 8.9088-8.2944 19.6608 0.512 39.424 0.1024 60.2112 0.1024z m197.4272 231.0144c-4.096-6.144-7.68-10.9568-10.752-16.1792a222.0032 222.0032 0 0 1-27.3408-95.6416L256 461.7216v-5.3248h14.4384c14.848 0 29.696 0.1024 44.6464-0.1024 4.096 0 5.632 1.1264 6.144 5.4272 2.9696 41.472 5.8368 82.944 9.4208 124.3136 0.6144 8.4992 3.8912 16.384 5.7344 24.7808 0.512 2.3552 1.3312 5.3248 0.4096 7.2704l-34.2016 69.3248z m34.0992 25.7024l6.9632-13.824c8.3968-16.384 16.896-32.5632 25.088-49.0496 1.8432-3.4816 3.6864-4.096 7.5776-3.4816 10.0352 1.8432 20.2752 3.6864 30.4128 4.096 18.432 0.6144 37.1712 0.2048 55.7056 0.2048h7.9872c-0.9216 2.4576-1.1264 4.096-2.048 5.5296-9.216 18.2272-18.8416 36.352-28.0576 54.784-2.048 4.1984-4.608 5.5296-9.216 5.5296-23.3472-0.1024-46.6944 0.2048-70.144-0.3072-7.5776 0-15.4624-2.1504-24.2688-3.4816z m615.424-256.512h-14.4384c-4.096 0.2048-5.4272-1.4336-5.3248-5.4272 0.2048-9.4208-0.2048-18.7392 0.2048-28.2624a32.6656 32.6656 0 0 1 65.1264 0.8192 32.768 32.768 0 0 1-32.5632 32.768c-4.3008 0.2048-8.704 0-13.0048 0z" fill="#FF2E4D"/>
+                    </svg>
+                </a>
+            </div>
+        </aside>
+
+        <!-- 头部 -->
+        <header class="blog-header">
+            <div class="header-content">
+                <svg class="header-logo" viewBox="0 0 3508 993" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g transform="matrix(6.23433,0,0,7.05382,-2193.04,-1533.23)"><path d="M799.388,307.337L807.699,315.541L823.379,298.739L818.356,291.696L799.388,307.337Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(9.94886,0,0,9.28918,-8042.53,-2099.54)"><path d="M827.936,259.899L825.951,280.268L835.811,280.471L839.433,260.883L827.936,259.899Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.69584,-1.05096,0.928694,8.38759,-3183.49,-875.587)"><path d="M827.936,259.899C827.672,266.863 827.241,273.418 825.662,277.188L829.121,284.298L837.045,282.011L839.438,260.947L827.936,259.899Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.85919,-1.0434,0.958243,8.38759,-2862.09,-906.202)"><path d="M827.936,259.899C827.737,265.742 827.687,273.554 825.636,278.914L828.338,284.83L836.956,283.131L839.273,261.874L827.936,259.899Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(7.17657,0,0,12.6192,-3856.34,-2979.91)"><path d="M827.936,259.899L827.366,278.853L836.999,276.523L839.405,259.772L827.936,259.899Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.74232,0,0,13.5862,-4325.52,-3194.29)"><path d="M827.936,259.899L826.977,289.074L838.557,287.787L839.405,259.772L827.936,259.899Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(7.50012,0,0,9.45915,-4320.51,-2187.3)"><path d="M827.936,259.899L828.719,306.363L813.445,305.838L813.128,311.809L834.191,315.644L839.191,312.223L839.307,259.577L827.936,259.899Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(8.61333,0,0,9.28918,-6649.79,-1835.15)"><path d="M828.085,260.349L829.023,277.245L812.071,277.792L812.058,286.295L835.016,287.706L840.777,284.058L839.307,259.577L828.085,260.349Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.96827,0,0,9.28035,-2857.6,-2149.7)"><path d="M827.936,259.899L826.873,307.891L816.323,307.391L815.781,314.201L835.306,315.987L838.461,313.264L839.307,259.577L827.936,259.899Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(7.17657,0,0,9.45915,-3835.77,-2131.37)"><path d="M816.299,270.193L819.401,277.04C828.172,274.619 836.506,272.198 845.932,271.486L846.013,264.423L816.299,270.193Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.18503,1.03608,-1.12493,9.5197,-2141.53,-2975.52)"><path d="M821.371,269.498L823.655,275.882L845.608,270.334L845.284,263.162L821.371,269.498Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.38183,1.03608,-1.16072,9.5197,-1827.99,-2994.54)"><path d="M821.318,269.635L823.602,276.02L845.608,270.334L845.284,263.162L821.318,269.635Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(7.60424,0,0,9.45915,-4215.3,-2092.45)"><path d="M820.13,278.875L844.141,272.559L849.036,278.037C846.704,282.775 842.649,288.139 841.375,293.48C833.486,295.071 828.38,296.202 823.183,299.136L818.512,293.562L820.449,291.987L820.13,278.875ZM828.31,282.906L829.013,288.4L834.646,287.365L838.682,281.687L837.444,280.796L828.31,282.906Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(7.60218,0,0,9.45915,-6125.68,-478.273)"><path d="M1109.67,81.566L1119.59,77.387L1129.53,83.935L1126.83,88.174L1128.12,128.501L1124.3,133.217C1116.07,130.984 1104.39,127.587 1101.69,126.779L1103.88,118.986L1117.99,121.432L1117.44,87.869L1110.98,89.33C1110.98,89.394 1110.97,89.266 1110.98,89.33L1109.67,81.566Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.24595,0,0,8.46016,-4223.46,-143.048)"><path d="M1101.06,81.654L1119.59,77.387L1129.53,83.935L1126.83,88.174L1121.48,106.72L1115.43,110.346L1092,102.936L1094.19,95.143L1110.9,97.711L1114.26,87.489L1102.36,89.418C1102.37,89.483 1102.36,89.354 1102.36,89.418L1101.06,81.654Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.44468,0,0,8.46016,-3976.17,-167.423)"><path d="M1098.82,83.253L1119.76,79.914L1129.7,86.462L1127,90.701L1120.27,111.596L1114.23,115.223L1084.34,104.25L1088.66,97.249L1110.3,102.399L1114.53,90.37L1100.12,91.018C1100.13,91.082 1100.12,90.954 1100.12,91.018L1098.82,83.253Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(7.60218,0,0,9.45915,-6125.68,-478.273)"><path d="M1104.72,122.96C1101.86,128.575 1098.21,133.654 1094.07,138.903L1082.32,135.987C1100,117.911 1103.91,109.452 1101.62,83.143L1106.76,80.3L1109.83,81.528L1109.91,81.495L1111.13,89.293C1111.72,101.865 1109.88,111.272 1106.4,119.375L1105.82,119.272L1104.72,122.96Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(7.60218,0,0,9.45915,-4211.78,-2221.97)"><path d="M856.391,279.704L867.659,276.255L868.004,283.37L857.541,285.395L856.391,279.704Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(10.0861,0,0,11.0059,-6367.79,-2542.24)"><path d="M856.391,279.704L867.659,276.255L868.004,283.37L857.541,285.395L856.391,279.704Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(7.51309,2.94256,-2.72214,8.31415,-4295.77,-4587.68)"><path d="M908.919,265.681L903.543,275.88L917.555,280.519L922.328,273.787L908.919,265.681Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.36201,2.52319,-2.52911,7.8221,-2243.7,-4058.32)"><path d="M908.919,265.681L903.543,275.88L914.641,278.677L919.414,271.945L908.919,265.681Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.80783,-2.78128,3.7635,7.89753,-5261.07,950.847)"><path d="M908.919,265.681L904.441,274.486L914.622,277.675L917.738,271.592L908.919,265.681Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.36201,2.52319,-2.52911,7.8221,-2102.87,-3877.36)"><path d="M909.439,268.138L903.543,275.88L918.699,283.075L922.802,274.522L909.439,268.138Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(10.9393,0,0,9.28918,-9766.78,-2138.4)"><path d="M931.911,260.382L935.968,269.349L946.476,266.922L944.346,256.419L931.911,260.382Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(9.94096,0.255436,-0.285095,9.68068,-8897.82,-2245.58)"><path d="M917.99,272L921.607,281.371C936.697,276.23 974.29,272.524 991.362,270.686L987.768,261.053L917.99,272Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(9.56215,0.598131,-0.608024,9.21227,-7646.68,-2322.5)"><path d="M917.99,272L921.607,281.371C936.697,276.23 974.29,272.524 991.362,270.686L987.768,261.053L917.99,272Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(8.60873,0.763304,-0.778178,9.19819,-6691.69,-2600.07)"><path d="M917.99,272L921.607,281.371C936.697,276.23 968.627,272.83 985.699,270.992L982.105,261.358L917.99,272Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(10.0151,0,0,8.38814,-8929.51,-1907.44)"><path d="M915.144,269.574L918.76,278.944C937.997,274.706 966.264,273.182 966.264,273.182L965.241,284.054L976.403,284.224L976.7,268.754L968.076,263.091L915.144,269.574Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(6.10879,0,0,8.43205,-3875.7,-1802.93)"><path d="M917.99,272L922.147,283.031C937.44,276.765 950.233,273.074 967.304,271.236L962.86,262.167L917.99,272Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(5.6756,0,0,7.93302,-2428.96,-1684.31)"><path d="M921.947,269.185L926.104,280.216C941.397,273.95 949.987,273.904 967.059,272.066L965.132,262.325L921.947,269.185Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(2.1651,7.74678,-7.39092,2.47097,2015.68,-7762.36)"><path d="M947.685,277.594L956.006,287.721L962.489,283.165L955.894,271.139L947.685,277.594Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(2.07979,7.2883,-7.09971,2.32474,3035.84,-7291.04)"><path d="M949.494,279.206L956.741,288.733L963.865,284.023L958.581,273.55L949.494,279.206Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(8.64859,0,0,9.45915,-6174.62,-2270.61)"><path d="M930.733,293.649L917.296,307.939L923.941,313.158L937.698,298.376L930.733,293.649Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(4.73222,0,0,7.43487,-402.544,-2501.41)"><path d="M635.795,377.355L640.029,388.914L664.044,383.357L656.556,400.632L673.567,401.06L680.383,382.76L683.555,377.764L672.176,371.931C658.132,374.888 648.036,376.675 635.795,377.355Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(5.29203,0,0,7.75517,-3025.96,-2450.52)"><path d="M628.605,376.38L632.839,387.94L679.871,382.278L664.247,392.009L679.325,396.421L701.184,381.639L704.356,376.643L690.623,370.435C676.578,373.392 640.846,375.7 628.605,376.38Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(4.88278,0,0,7.43487,-33.6759,-2525.78)"><path d="M637.459,376.366L641.734,388.25L664.206,383.539L658.847,402.173L673.345,402.727L681.223,383.359L684.192,378.755L673.188,371.493C663.956,373.863 649.596,375.604 637.459,376.366Z" style="fill:rgb(43,51,62);"/></g>
+                    <g transform="matrix(8.88661,0,0,9.80968,-7906.53,-2266.87)"><path d="M1009.1,262.908L1057.02,256.95L1064.98,262.195L1065.55,285.597L1056.39,285.845L1056.05,283.942L1015.41,287.789L1008.97,289.726L1004.67,285.958L1009.1,262.908ZM1015.7,278.315L1014.61,281.51L1055.45,277.243L1055.04,274.936L1015.7,278.315ZM1018.1,269.144L1016.49,272.665L1055.87,267.984L1053.03,265.558L1018.1,269.144Z" style="fill:rgb(43,51,62);"/></g>
+                </svg>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="搜索文章、标签或关键词...">
+                    <button class="search-button">搜索</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <!-- 博客文章卡片1 -->
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=220&q=80" alt="文章配图" class="card-img">
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span>2023年10月15日</span>
+                        <span>前端开发</span>
+                        <span>8分钟阅读</span>
+                    </div>
+                    <h2 class="card-title">深入理解CSS Grid布局的核心概念</h2>
+                    <p class="card-excerpt">CSS Grid布局是当今最强大的CSS布局系统之一，它是一个二维网格-based 布局系统，旨在完全改变我们基于网格的用户界面的方式。与Flexbox的一维布局系统不同，Grid布局可以同时处理行和列...</p>
+                    <a href="#" class="read-more">继续阅读 →</a>
+                </div>
+            </article>
+
+            <!-- 博客文章卡片2 -->
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=220&q=80" alt="文章配图" class="card-img">
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span>2023年10月10日</span>
+                        <span>JavaScript</span>
+                        <span>12分钟阅读</span>
+                    </div>
+                    <h2 class="card-title">现代JavaScript中的异步编程模式</h2>
+                    <p class="card-excerpt">从回调地狱到Promise，再到async/await，JavaScript的异步编程模式经历了巨大的演变。本文将深入探讨这些模式的工作原理、优缺点以及在实际项目中的应用场景，帮助你编写更清晰、更可维护的异步代码...</p>
+                    <a href="#" class="read-more">继续阅读 →</a>
+                </div>
+            </article>
+
+            <!-- 博客文章卡片3 -->
+            <article class="card">
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span>2023年10月5日</span>
+                        <span>用户体验</span>
+                        <span>6分钟阅读</span>
+                    </div>
+                    <h2 class="card-title">设计系统中的色彩心理学应用</h2>
+                    <p class="card-excerpt">色彩不仅仅是视觉装饰，它在用户界面中扮演着传达信息、引导注意力和激发情感的重要角色。本文将探讨如何基于色彩心理学原理构建有效的设计系统，以及如何通过色彩提升产品的可用性和吸引力...</p>
+                    <a href="#" class="read-more">继续阅读 →</a>
+                </div>
+            </article>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="blog-footer">
+            <p>© 2025 个人博客</p>
+        </footer>
+    </div>
+
+    <script>
+        // 搜索功能实现
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.querySelector('.search-input');
+            const searchButton = document.querySelector('.search-button');
+            const cards = document.querySelectorAll('.card');
+            
+            // 搜索按钮点击事件
+            searchButton.addEventListener('click', function() {
+                performSearch();
+            });
+            
+            // 输入框回车事件
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            function performSearch() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                
+                if (searchTerm === '') {
+                    // 如果搜索词为空，显示所有卡片
+                    cards.forEach(card => {
+                        card.style.display = 'block';
+                    });
+                    return;
+                }
+                
+                // 遍历所有卡片，根据标题和摘要进行搜索
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const excerpt = card.querySelector('.card-excerpt').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || excerpt.includes(searchTerm)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
